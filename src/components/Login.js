@@ -1,10 +1,21 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { USER_AVATAR } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errMessage, setErrMessage] = useState(null);
 
@@ -35,7 +46,25 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
+          updateProfile(user, {
+            displayName: name.current ? name.current.value: '',
+            photoURL: USER_AVATAR,
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              navigate("/browse");
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              setErrMessage(error.message);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -65,7 +94,25 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user);
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: USER_AVATAR,
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              navigate("/browse");
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              setErrMessage(error.message);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
