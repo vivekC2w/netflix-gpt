@@ -4,7 +4,6 @@ import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
@@ -26,8 +25,8 @@ const Login = () => {
   const handleButtonClick = () => {
     //validate the form data
     if (isSignInForm) {
-      console.log("Email: ", email.current.value);
-      console.log("Pass: ", password.current.value);
+      // console.log("Email: ", email.current.value);
+      // console.log("Pass: ", password.current.value);
 
       const message = checkValidData(
         null,
@@ -35,8 +34,11 @@ const Login = () => {
         password.current.value,
         isSignInForm
       );
+
       setErrMessage(message);
+
       if (message) return;
+
       //sign In Logic
       signInWithEmailAndPassword(
         auth,
@@ -47,7 +49,7 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           updateProfile(user, {
-            displayName: name.current ? name.current.value: '',
+            displayName: name.current ? name.current.value : "",
             photoURL: USER_AVATAR,
           })
             .then(() => {
