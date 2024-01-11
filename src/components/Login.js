@@ -7,13 +7,11 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { USER_AVATAR } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errMessage, setErrMessage] = useState(null);
@@ -25,8 +23,6 @@ const Login = () => {
   const handleButtonClick = () => {
     //validate the form data
     if (isSignInForm) {
-      // console.log("Email: ", email.current.value);
-      // console.log("Pass: ", password.current.value);
 
       const message = checkValidData(
         null,
@@ -54,7 +50,6 @@ const Login = () => {
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
-              navigate("/browse");
               dispatch(
                 addUser({
                   uid: uid,
@@ -74,9 +69,6 @@ const Login = () => {
           setErrMessage(errorCode + "-" + errorMessage);
         });
     } else {
-      console.log("Name: ", name.current.value);
-      console.log("Email: ", email.current.value);
-      console.log("Pass: ", password.current.value);
 
       const message = checkValidData(
         name.current.value,
@@ -102,7 +94,7 @@ const Login = () => {
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
-              navigate("/browse");
+              
               dispatch(
                 addUser({
                   uid: uid,
