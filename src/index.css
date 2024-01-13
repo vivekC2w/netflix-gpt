@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.horizontalScrollbar::-webkit-scrollbar {
+    background-color: #5c4e4e79;
+    display: block;
+    height: 0.8rem !important;
+    width: 100% !important;
+}
+
+.horizontalScrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #9d9b9b73;
+    border-radius: 6px;
+}
+
