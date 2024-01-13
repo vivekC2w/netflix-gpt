@@ -7,6 +7,7 @@ import { addUser, removeUser } from "../utils/userSlice";
 import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toggleGptSearchView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -76,9 +77,13 @@ const Header = () => {
           >
             {showGptSearch ? "Home" : "GPT Search"}
           </button>
-          <img className="hidden md:block w-12 h-12" alt="usericon" src={user?.photoURL} />
+          <img
+            className="hidden md:block w-12 h-12 mr-4"
+            alt="usericon"
+            src={user?.photoURL}
+          />
           <button onClick={handleSignOut} className="font-bold text-white">
-            (Sign Out)
+            <FaSignOutAlt />
           </button>
         </div>
       )}
