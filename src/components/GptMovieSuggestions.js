@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import MovieCard from "./MovieCard";
 import MovieList from "./MovieList";
 
 const GptMovieSuggestions = () => {
@@ -22,5 +21,5 @@ const GptMovieSuggestions = () => {
     </div>
   );
 };
-
+  
 export default GptMovieSuggestions;
