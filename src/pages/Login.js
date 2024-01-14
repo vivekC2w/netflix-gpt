@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Header from "./Header";
+import Header from "../components/Header";
 import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
@@ -9,7 +9,7 @@ import {
 import { auth } from "../utils/firebase";
 import { BG_URL, USER_AVATAR } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/userSlice";
+import { addUser } from "../store/slices/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();

@@ -3,10 +3,10 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
+import { addUser, removeUser } from "../store/slices/userSlice";
 import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
-import { toggleGptSearchView } from "../utils/gptSlice";
-import { changeLanguage } from "../utils/configSlice";
+import { toggleGptSearchView } from "../store/slices/gptSlice";
+import { changeLanguage } from "../store/slices/configSlice";
 import { FaSignOutAlt } from "react-icons/fa";
 
 const Header = () => {
@@ -22,29 +22,6 @@ const Header = () => {
       });
   };
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { uid, email, displayName, photoURL } = user;
-        dispatch(
-          addUser({
-            uid: uid,
-            email: email,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
-        );
-        navigate("/browse");
-      } else {
-        dispatch(removeUser());
-        navigate("/");
-      }
-    });
-
-    //unsubscribe when component unmounts
-    return () => unsubscribe();
-  }, []);
-
   const handleGptSearchClick = () => {
     //Toggle GPT Search button
     dispatch(toggleGptSearchView());
@@ -55,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between ">
+    <div className="fixed top-0 w-full px-8 py-2 bg-gradient-to-b from-black z-50 flex flex-col md:flex-row justify-between ">
       <img className="w-44 mx-auto md:mx-0" src={LOGO} alt="logo" />
       {user && (
         <div className="flex p-2 justify-between">
